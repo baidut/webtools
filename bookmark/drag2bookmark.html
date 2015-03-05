@@ -1,0 +1,58 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<style type="text/css">
+#div1 {width:488px;height:70px;padding:10px;border:1px solid #aaaaaa;}
+div {width:488px;height:70px;padding:10px;border:1px solid #aaaaaa;}
+</style>
+<script type="text/javascript">
+function allowDrop(ev) {
+	ev.preventDefault();
+}
+function drag(ev) {
+	ev.dataTransfer.setData("Text",ev.target.id);
+}
+function drop(ev) {
+	ev.preventDefault();
+	var data=ev.dataTransfer.getData("Text");
+	ev.target.appendChild(document.getElementById(data));
+}
+function drop2(ev) {
+	ev.preventDefault();
+	//alert(ev); 触发相同事件
+	// alert(ev.dataTransfer); 相同
+	var data=ev.dataTransfer.getData("Text"); // 可以获取data！
+	alert(data);
+}
+function drop3(ev) {
+	ev.preventDefault();
+	//alert(ev); 触发相同事件
+	// alert(ev.dataTransfer); 相同
+	/*alert(ev.dataTransfer.types);
+	var data=ev.dataTransfer.getData("text/plain"); // 可以获取data！ Url 不可Title
+	alert(data);
+	alert(ev.dataTransfer.getData("text/uri-list"));
+	alert(ev.dataTransfer.getData("text/x-opera-description")); // 收藏的名称
+	*/
+	var link = document.createElement("a");
+	link.setAttribute('href',ev.dataTransfer.getData("text"));
+	link.setAttribute('target','_blank');
+    link.innerHTML = ev.dataTransfer.getData("text/x-opera-description");
+	ev.target.appendChild(link);
+// 书签可以直接在浏览器之间拖动
+}
+</script>
+</head>
+<body>
+
+<p>请把 W3School 的图片拖放到矩形中：</p>
+
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<br />
+<p id="drag1" draggable="true" ondragstart="drag(event)" >段落1</p>
+<p id="drag2" draggable="true" ondragstart="drag(event)" >段落2</p>
+<a href='http://www.baidu.com' id="drag3" draggable="true" ondragstart="drag(event)" >段落3</a>
+<div ondrop="drop2(event)" ondragover="allowDrop(event)"></div>
+<div ondrop="drop3(event)" ondragover="allowDrop(event)"></div>
+</body>
+</html>
